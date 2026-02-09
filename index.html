@@ -82,7 +82,6 @@
             background: white; border-radius: 8px; transition: all 0.3s; border: 2px solid transparent;
         }
         .payment-checkbox:hover { border-color: var(--primary-red); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(230, 57, 70, 0.1); }
-        /* هنا علبة الصح الصغيرة */
         .payment-checkbox input { width: 16px !important; height: 16px !important; accent-color: var(--primary-red); margin: 0 !important; }
         .social-container { background: linear-gradient(135deg, #fff, #f8f9fa); padding: 20px; border-radius: 12px; border: 2px solid var(--border-color); }
         .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
@@ -116,6 +115,42 @@
             justify-content: center; gap: 10px; margin-top: 15px; width: 100%;
         }
         .add-social-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(230, 57, 70, 0.25); }
+        
+        /* قسم المنتجات العامة الجديد */
+        .general-products-container { 
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb); 
+            padding: 20px; border-radius: 12px; border: 2px dashed #64b5f6; 
+            margin-bottom: 20px;
+        }
+        .general-product-item {
+            display: flex; gap: 10px; margin-bottom: 12px; align-items: center;
+        }
+        .general-product-url {
+            flex: 1; padding: 10px 15px; border: 2px solid #bbdefb; 
+            border-radius: 8px; font-size: 0.9rem; background: white;
+        }
+        .general-product-url:focus {
+            border-color: var(--primary-red); outline: none;
+        }
+        .btn-remove-general {
+            background: #ff8a80; color: white; border: none; 
+            border-radius: 6px; padding: 8px 12px; cursor: pointer;
+            transition: all 0.3s; display: flex; align-items: center; gap: 5px;
+        }
+        .btn-remove-general:hover {
+            background: #ff5252; transform: scale(1.05);
+        }
+        .btn-add-general {
+            background: #42a5f5; color: white; border: none; 
+            border-radius: 8px; padding: 10px 20px; cursor: pointer;
+            transition: all 0.3s; display: inline-flex; align-items: center;
+            gap: 8px; margin-top: 10px; font-weight: 600;
+        }
+        .btn-add-general:hover {
+            background: #2196f3; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+        
         .products-container { background: linear-gradient(135deg, #fff5f5, #ffe6e6); padding: 20px; border-radius: 12px; border: 2px dashed var(--light-red); }
         .product-item {
             background: white; padding: 18px; border-radius: 12px; border: 2px solid var(--border-color);
@@ -150,7 +185,6 @@
         }
         .btn-add:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(230, 57, 70, 0.25); }
         .form-actions { display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
-        /* هنا الأزرار الصغيرة */
         .btn {
             padding: 12px 24px; border: none; border-radius: 12px; font-size: 1rem;
             font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex;
@@ -185,14 +219,13 @@
         .json-preview::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
         .json-preview::-webkit-scrollbar-thumb:hover { background: #777; }
         .preview-actions { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-        /* زر النسخ المعدل للموبايل */
         .btn-copy {
             background: linear-gradient(135deg, #10b981, #0da271); color: white;
             padding: 12px 24px; border: none; border-radius: 10px; font-size: 1rem;
             cursor: pointer; transition: all 0.3s; display: flex; align-items: center;
             gap: 8px; font-weight: 600; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
             -webkit-tap-highlight-color: transparent; touch-action: manipulation;
-            user-select: none; min-height: 44px; /* مهم للموبايل */
+            user-select: none; min-height: 44px;
         }
         .btn-copy:hover, .btn-copy:active { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35); }
         .copy-message { color: #10b981; font-weight: 600; font-size: 1rem; opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; gap: 8px; }
@@ -256,9 +289,8 @@
             main { padding: 15px; }
             .container { border-radius: 15px; }
             .payment-methods { grid-template-columns: 1fr; }
-            /* تحسينات للموبايل */
             .btn-copy { padding: 14px 20px; font-size: 1.1rem; min-height: 50px; }
-            input, textarea, select { font-size: 16px; /* يمنع الزوم في iOS */ }
+            input, textarea, select { font-size: 16px; }
         }
         .pulse { animation: pulse 2s infinite; }
         @keyframes pulse {
@@ -314,9 +346,30 @@
                         <button type="button" class="add-social-btn" onclick="addSocial()"><i class="fas fa-plus-circle"></i> ضيف وسيلة تواصل جديدة</button>
                     </div>
                 </div>
+                
+                <!-- القسم الجديد: صور المنتجات العامة -->
                 <div class="form-group full-width">
-                    <h3><i class="fas fa-utensils"></i> المنتجات</h3>
-                    <p class="hint">ضيف منتجات البراند هنا. كل منتج هيبقى ليه اسم، صورة، وسعر.</p>
+                    <h3><i class="fas fa-images"></i> صور المنتجات العامة (عروض البراند)</h3>
+                    <p class="hint">ضيف روابط صور المنتجات العامة للبراند. كل صورة هتتضاف في الـ JSON في مصفوفة الـ products.</p>
+                    
+                    <div class="general-products-container">
+                        <div id="generalProductsContainer">
+                            <!-- هتتضاف هنا روابط الصور العامة -->
+                            <div class="general-product-item">
+                                <input type="url" class="general-product-url" placeholder="https://example.com/product-image1.jpg">
+                                <button type="button" class="btn-remove-general" onclick="removeGeneralProduct(this)"><i class="fas fa-times"></i> مسح</button>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn-add-general" onclick="addGeneralProduct()">
+                            <i class="fas fa-plus"></i> ضيف صورة منتج عام
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <h3><i class="fas fa-utensils"></i> المنتجات التفصيلية</h3>
+                    <p class="hint">ضيف المنتجات التفصيلية للبراند (المنتجات اللي بيشتريها العميل). كل منتج هيبقى ليه اسم، صورة، وسعر.</p>
                     <div class="products-container">
                         <div id="productsContainer">
                             <div class="product-item">
@@ -372,7 +425,11 @@
         "phone": "201234567890",
         "website": "https://www.example.com"
       },
-      "products": ["https://image1.jpg", "https://image2.jpg"],
+      "products": [
+        "https://image1.jpg",
+        "https://image2.jpg",
+        "https://image3.jpg"
+      ],
       "productsList": [
         {
           "name_product": "اسم المنتج",
@@ -410,6 +467,11 @@
             addSocialMedia('instagram');
             addSocialMedia('facebook');
             addSocialMedia('tiktok');
+            
+            // إضافة صورة عامة افتراضية للمساعدة
+            setTimeout(() => {
+                document.querySelector('.general-product-url').placeholder = 'https://example.com/product-image.jpg';
+            }, 100);
         });
 
         // دالة إضافة وسيلة تواصل اجتماعي
@@ -480,6 +542,29 @@
             if (input) input.value = '';
         }
 
+        // دالة إضافة منتج عام جديد
+        function addGeneralProduct() {
+            const container = document.getElementById('generalProductsContainer');
+            const newProduct = document.createElement('div');
+            newProduct.className = 'general-product-item';
+            newProduct.innerHTML = `
+                <input type="url" class="general-product-url" placeholder="https://example.com/product-image.jpg">
+                <button type="button" class="btn-remove-general" onclick="removeGeneralProduct(this)">
+                    <i class="fas fa-times"></i> مسح
+                </button>
+            `;
+            container.appendChild(newProduct);
+        }
+
+        // دالة حذف منتج عام
+        function removeGeneralProduct(button) {
+            if (document.querySelectorAll('.general-product-item').length > 1) {
+                button.closest('.general-product-item').remove();
+            } else {
+                alert('لازم يبقى عندك صورة منتج عام واحدة على الأقل');
+            }
+        }
+
         // دالة إضافة منتج جديد
         function addProduct() {
             const container = document.getElementById('productsContainer');
@@ -538,7 +623,7 @@
                 deliveryAreas: document.getElementById('deliveryAreas').value.trim(),
                 paymentMethods: Array.from(document.querySelectorAll('.payment-checkbox input:checked')).map(cb => cb.value),
                 socialMedia: {},
-                products: [],
+                products: [],  // هنا هتضاف المنتجات العامة
                 productsList: []
             };
 
@@ -554,15 +639,21 @@
                 }
             });
 
-            // جمع المنتجات
+            // جمع المنتجات العامة (products array)
+            document.querySelectorAll('.general-product-url').forEach(input => {
+                const url = input.value.trim();
+                if (url) {
+                    brandData.products.push(url);
+                }
+            });
+
+            // جمع المنتجات التفصيلية (productsList)
             document.querySelectorAll('.product-item').forEach(item => {
                 const name = item.querySelector('.product-name').value.trim();
                 const image = item.querySelector('.product-image').value.trim();
                 const price = item.querySelector('.product-price').value.trim();
                 const isNew = item.querySelector('.product-new').checked;
                 const isOut = item.querySelector('.product-out').checked;
-                
-                if (image) brandData.products.push(image);
                 
                 if (name && image && price) {
                     const productObj = {
@@ -611,7 +702,6 @@
                 return;
             }
 
-            // طريقة تعمل على كل الأجهزة
             const textArea = document.createElement('textarea');
             textArea.value = generatedJSON;
             textArea.style.position = 'fixed';
@@ -626,7 +716,6 @@
                 if (successful) {
                     showCopySuccess();
                 } else {
-                    // Fallback للـ Clipboard API
                     navigator.clipboard.writeText(generatedJSON).then(showCopySuccess);
                 }
             } catch (err) {
@@ -653,7 +742,9 @@
             if (confirm('هل أنت متأكد إنك عايز تبدأ من جديد؟')) {
                 // مسح كل الحقول
                 document.querySelectorAll('input[type="text"], input[type="url"], input[type="number"], textarea').forEach(input => {
-                    input.value = '';
+                    if (!input.classList.contains('general-product-url') && !input.classList.contains('product-name')) {
+                        input.value = '';
+                    }
                 });
                 
                 // إعادة وسائل الدفع
@@ -670,7 +761,16 @@
                 addSocialMedia('facebook');
                 addSocialMedia('tiktok');
                 
-                // إعادة المنتجات
+                // إعادة المنتجات العامة
+                const generalContainer = document.getElementById('generalProductsContainer');
+                generalContainer.innerHTML = `
+                    <div class="general-product-item">
+                        <input type="url" class="general-product-url" placeholder="https://example.com/product-image.jpg">
+                        <button type="button" class="btn-remove-general" onclick="removeGeneralProduct(this)"><i class="fas fa-times"></i> مسح</button>
+                    </div>
+                `;
+                
+                // إعادة المنتجات التفصيلية
                 const productsContainer = document.getElementById('productsContainer');
                 productsContainer.innerHTML = `
                     <div class="product-item">
