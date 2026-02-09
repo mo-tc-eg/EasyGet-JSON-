@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easyget | مولد بيانات البراند</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        :root {
+            --primary-red: #e63946; --dark-red: #d00000; --light-red: #ff6b6b; --dark-bg: #1a1a2e;
+            --light-bg: #f8f9fa; --card-bg: #ffffff; --text-dark: #2d3436; --text-light: #636e72;
+            --border-color: #dfe6e9; --shadow: 0 10px 30px rgba(230, 57, 70, 0.1);
+            --shadow-hover: 0 15px 40px rgba(230, 57, 70, 0.2);
+        }
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); color: var(--text-dark);
+            line-height: 1.6; min-height: 100vh; padding: 15px; direction: rtl;
+        }
+        .container {
+            max-width: 1200px; margin: 0 auto; background-color: var(--card-bg); border-radius: 20px;
+            box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--border-color);
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red)); color: white;
+            padding: 25px 30px; text-align: center; position: relative; overflow: hidden;
+        }
+        header::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+        header h1 {
+            font-size: 2rem; margin-bottom: 12px; display: flex; align-items: center;
+            justify-content: center; gap: 15px; position: relative; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .subtitle {
+            font-size: 1rem; opacity: 0.95; max-width: 800px; margin: 0 auto;
+            position: relative; font-weight: 300;
+        }
+        main { padding: 25px; display: grid; gap: 25px; }
+        .form-section, .preview-section {
+            background: var(--card-bg); border-radius: 18px; padding: 22px;
+            border: 2px solid var(--border-color); transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .form-section:hover, .preview-section:hover {
+            transform: translateY(-3px); box-shadow: var(--shadow-hover);
+        }
+        h2 {
+            color: var(--dark-red); margin-bottom: 20px; padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary-red); display: flex; align-items: center;
+            gap: 12px; font-size: 1.6rem; position: relative;
+        }
+        h2::after {
+            content: ""; position: absolute; bottom: -3px; right: 0; width: 80px;
+            height: 3px; background: linear-gradient(to left, var(--primary-red), transparent);
+        }
+        h3 { color: var(--primary-red); margin: 20px 0 15px; font-size: 1.3rem; display: flex; align-items: center; gap: 8px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 18px; position: relative; }
+        .full-width { grid-column: 1 / -1; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-dark); font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+        .label-icon { color: var(--primary-red); font-size: 1rem; }
+        input, textarea, select {
+            width: 100%; padding: 12px 16px; border: 2px solid var(--border-color);
+            border-radius: 10px; font-size: 0.95rem; transition: all 0.3s;
+            background-color: var(--card-bg); color: var(--text-dark);
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none; border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1); transform: translateY(-1px);
+        }
+        textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+        .payment-methods {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;
+            margin-top: 10px; background: linear-gradient(135deg, #fff5f5, #ffe6e6);
+            padding: 18px; border-radius: 12px; border: 2px dashed var(--light-red);
+        }
+        .payment-checkbox {
+            display: flex; align-items: center; gap: 6px; padding: 8px 15px;
+            background: white; border-radius: 8px; transition: all 0.3s; border: 2px solid transparent;
+        }
+        .payment-checkbox:hover { border-color: var(--primary-red); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(230, 57, 70, 0.1); }
+        /* هنا علبة الصح الصغيرة */
+        .payment-checkbox input { width: 16px !important; height: 16px !important; accent-color: var(--primary-red); margin: 0 !important; }
+        .social-container { background: linear-gradient(135deg, #fff, #f8f9fa); padding: 20px; border-radius: 12px; border: 2px solid var(--border-color); }
+        .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .social-item {
+            background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--border-color);
+            transition: all 0.3s; position: relative; display: flex; align-items: center; gap: 12px;
+        }
+        .social-item:hover { border-color: var(--primary-red); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(230, 57, 70, 0.12); }
+        .social-icon {
+            width: 42px; height: 42px; border-radius: 10px; display: flex;
+            align-items: center; justify-content: center; font-size: 1.2rem; color: white; flex-shrink: 0;
+        }
+        .instagram { background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D); }
+        .facebook { background: linear-gradient(45deg, #1877F2, #0A5BC4); }
+        .tiktok { background: linear-gradient(45deg, #000000, #25F4EE, #FE2C55); }
+        .whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); }
+        .phone { background: linear-gradient(45deg, #34B7F1, #009688); }
+        .website { background: linear-gradient(45deg, #FF6B6B, #EE5A24); }
+        .social-input { flex: 1; border: none; padding: 10px 12px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef; font-size: 0.9rem; }
+        .social-input:focus { background: white; border-color: var(--primary-red); }
+        .remove-social {
+            background: var(--light-red); color: white; border: none; width: 32px; height: 32px;
+            border-radius: 6px; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; transition: all 0.3s; flex-shrink: 0; font-size: 0.9rem;
+        }
+        .remove-social:hover { background: var(--primary-red); transform: scale(1.1); }
+        .add-social-btn {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red)); color: white;
+            border: none; padding: 12px 20px; border-radius: 10px; font-size: 1rem;
+            cursor: pointer; transition: all 0.3s; display: flex; align-items: center;
+            justify-content: center; gap: 10px; margin-top: 15px; width: 100%;
+        }
+        .add-social-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(230, 57, 70, 0.25); }
+        .products-container { background: linear-gradient(135deg, #fff5f5, #ffe6e6); padding: 20px; border-radius: 12px; border: 2px dashed var(--light-red); }
+        .product-item {
+            background: white; padding: 18px; border-radius: 12px; border: 2px solid var(--border-color);
+            margin-bottom: 15px; transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .product-item::before {
+            content: ""; position: absolute; top: 0; right: 0; width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--primary-red), var(--light-red));
+        }
+        .product-item:hover { border-color: var(--primary-red); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(230, 57, 70, 0.12); }
+        .product-row { display: grid; grid-template-columns: 2fr 2fr 1fr auto auto; gap: 15px; align-items: center; }
+        @media (max-width: 1100px) { .product-row { grid-template-columns: 1fr; gap: 12px; } }
+        .product-options { display: flex; gap: 15px; background: #f8f9fa; padding: 12px; border-radius: 8px; }
+        .checkbox-label {
+            display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+            background: white; border-radius: 6px; border: 2px solid var(--border-color);
+            transition: all 0.3s; cursor: pointer; font-size: 0.9rem;
+        }
+        .checkbox-label:hover { border-color: var(--primary-red); background: #fff5f5; }
+        .checkbox-label input { width: 16px; height: 16px; accent-color: var(--primary-red); }
+        .btn-remove {
+            background: var(--light-red); color: white; border: none; border-radius: 8px;
+            padding: 8px 15px; cursor: pointer; transition: all 0.3s; display: flex;
+            align-items: center; justify-content: center; gap: 6px; font-weight: 600; font-size: 0.9rem;
+        }
+        .btn-remove:hover { background: var(--primary-red); transform: scale(1.05); box-shadow: 0 4px 12px rgba(230, 57, 70, 0.25); }
+        .btn-add {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red)); color: white;
+            border: none; border-radius: 12px; padding: 14px 20px; font-size: 1rem;
+            cursor: pointer; transition: all 0.3s; display: flex; align-items: center;
+            justify-content: center; gap: 10px; margin-top: 20px; width: 100%; font-weight: 600;
+        }
+        .btn-add:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(230, 57, 70, 0.25); }
+        .form-actions { display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+        /* هنا الأزرار الصغيرة */
+        .btn {
+            padding: 12px 24px; border: none; border-radius: 12px; font-size: 1rem;
+            font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex;
+            align-items: center; justify-content: center; gap: 10px; min-width: 160px;
+            position: relative; overflow: hidden;
+        }
+        .btn::before {
+            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn:hover::before { left: 100%; }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white; box-shadow: 0 6px 20px rgba(230, 57, 70, 0.25);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(230, 57, 70, 0.35); }
+        .btn-secondary {
+            background: white; color: var(--primary-red); border: 2px solid var(--primary-red);
+        }
+        .btn-secondary:hover { background: #fff5f5; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(230, 57, 70, 0.15); }
+        .preview-section { display: none; }
+        .json-preview {
+            background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 12px;
+            font-family: 'Courier New', monospace; font-size: 0.9rem;
+            overflow-x: auto; white-space: pre; min-height: 200px; max-height: 400px;
+            overflow-y: auto; margin-bottom: 20px; border: 2px solid #333;
+            direction: ltr !important; text-align: left !important; word-break: break-all;
+        }
+        .json-preview::-webkit-scrollbar { width: 8px; height: 8px; }
+        .json-preview::-webkit-scrollbar-track { background: #2d2d2d; }
+        .json-preview::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+        .json-preview::-webkit-scrollbar-thumb:hover { background: #777; }
+        .preview-actions { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        /* زر النسخ المعدل للموبايل */
+        .btn-copy {
+            background: linear-gradient(135deg, #10b981, #0da271); color: white;
+            padding: 12px 24px; border: none; border-radius: 10px; font-size: 1rem;
+            cursor: pointer; transition: all 0.3s; display: flex; align-items: center;
+            gap: 8px; font-weight: 600; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+            user-select: none; min-height: 44px; /* مهم للموبايل */
+        }
+        .btn-copy:hover, .btn-copy:active { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35); }
+        .copy-message { color: #10b981; font-weight: 600; font-size: 1rem; opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; gap: 8px; }
+        .copy-message.show { opacity: 1; }
+        .json-example {
+            background: linear-gradient(135deg, #fff5f5, #ffe6e6); padding: 20px;
+            border-radius: 12px; margin-top: 25px; border-right: 4px solid var(--primary-red);
+            position: relative;
+        }
+        .json-example::before {
+            content: "💡"; position: absolute; top: -12px; right: -12px;
+            background: var(--primary-red); color: white; width: 35px; height: 35px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; box-shadow: 0 4px 12px rgba(230, 57, 70, 0.25);
+        }
+        .json-example details { margin-top: 15px; }
+        .json-example summary {
+            cursor: pointer; font-weight: 600; color: var(--dark-red);
+            padding: 12px 16px; background: white; border-radius: 10px;
+            border: 2px solid var(--light-red); display: flex; align-items: center;
+            gap: 8px; transition: all 0.3s; font-size: 0.95rem;
+        }
+        .json-example summary:hover { background: #fff5f5; transform: translateY(-2px); }
+        .json-example pre {
+            background: #1e1e1e; color: #f8f8f2; padding: 15px; border-radius: 10px;
+            overflow-x: auto; margin-top: 12px; font-size: 0.85rem; border: 2px solid #333;
+            direction: ltr; text-align: left;
+        }
+        .hint {
+            color: var(--text-light); font-size: 0.9rem; margin-bottom: 15px;
+            padding: 12px; background: #f8f9fa; border-radius: 8px;
+            border-right: 3px solid var(--primary-red);
+        }
+        footer {
+            text-align: center; padding: 20px; background: linear-gradient(135deg, var(--dark-red), #b00000);
+            color: white; margin-top: 30px; position: relative; overflow: hidden;
+        }
+        footer::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(to right, #ff6b6b, #ff8e8e, #ff6b6b);
+        }
+        footer p { font-size: 0.95rem; position: relative; font-weight: 300; }
+        .alert {
+            padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; display: none;
+            align-items: center; gap: 12px; animation: slideIn 0.5s ease; border-right: 4px solid;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .alert-success { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .alert-error { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .form-grid, .social-grid { grid-template-columns: 1fr; }
+            .product-row { grid-template-columns: 1fr; gap: 10px; }
+            .product-options { flex-direction: column; gap: 8px; }
+            .form-actions { flex-direction: column; gap: 10px; }
+            .btn { width: 100%; min-width: auto; padding: 14px 20px; }
+            header h1 { font-size: 1.6rem; flex-direction: column; gap: 10px; text-align: center; }
+            main { padding: 15px; }
+            .container { border-radius: 15px; }
+            .payment-methods { grid-template-columns: 1fr; }
+            /* تحسينات للموبايل */
+            .btn-copy { padding: 14px 20px; font-size: 1.1rem; min-height: 50px; }
+            input, textarea, select { font-size: 16px; /* يمنع الزوم في iOS */ }
+        }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(230, 57, 70, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-fire" style="color: #ffd166;"></i> Easyget - مولد بيانات البراند</h1>
+            <p class="subtitle">أدخل بيانات البراند هنا وهتجيلك JSON جاهز للاستخدام في التطبيق</p>
+        </header>
+        <main>
+            <div class="alert alert-success" id="successAlert">
+                <i class="fas fa-check-circle fa-lg"></i>
+                <div><strong>تم النسخ بنجاح!</strong><p>JSON اتعمل منه نسخ للحافظة</p></div>
+            </div>
+            <div class="alert alert-error" id="errorAlert">
+                <i class="fas fa-exclamation-circle fa-lg"></i>
+                <div><strong>يوجد خطأ!</strong><p>لازم تدخل اسم البراند على الأقل</p></div>
+            </div>
+            <section class="form-section">
+                <h2><i class="fas fa-edit"></i> بيانات البراند الأساسية</h2>
+                <div class="form-grid">
+                    <div class="form-group"><label for="brandName"><i class="fas fa-store label-icon"></i> اسم البراند</label><input type="text" id="brandName" placeholder="مثل: Fati's"></div>
+                    <div class="form-group"><label for="orderUrl"><i class="fas fa-shopping-cart label-icon"></i> رابط الطلب</label><input type="url" id="orderUrl" placeholder="https://www.example.com"></div>
+                    <div class="form-group"><label for="imageUrl"><i class="fas fa-image label-icon"></i> رابط صورة اللوجو</label><input type="url" id="imageUrl" placeholder="https://images.com/logo.jpg"></div>
+                    <div class="form-group"><label for="description"><i class="fas fa-file-alt label-icon"></i> الوصف</label><textarea id="description" placeholder="دونات لذيذة وطازجة، تصنع بالسعادة والحب!" rows="3"></textarea></div>
+                    <div class="form-group"><label for="rating"><i class="fas fa-star label-icon"></i> التقييم (من 5)</label><input type="number" id="rating" min="0" max="5" step="0.1" placeholder="4.4"></div>
+                    <div class="form-group"><label for="deliveryTime"><i class="fas fa-clock label-icon"></i> وقت التوصيل</label><input type="text" id="deliveryTime" placeholder="7-5 ساعات"></div>
+                    <div class="form-group"><label for="deliveryFee"><i class="fas fa-money-bill-wave label-icon"></i> رسوم التوصيل</label><input type="text" id="deliveryFee" placeholder="ج.م 65"></div>
+                    <div class="form-group"><label for="minPrice"><i class="fas fa-tag label-icon"></i> أقل سعر (ج.م)</label><input type="number" id="minPrice" placeholder="50"></div>
+                    <div class="form-group"><label for="maxPrice"><i class="fas fa-tags label-icon"></i> أعلى سعر (ج.م)</label><input type="number" id="maxPrice" placeholder="895"></div>
+                    <div class="form-group"><label for="deliveryAreas"><i class="fas fa-map-marker-alt label-icon"></i> مناطق التوصيل</label><input type="text" id="deliveryAreas" placeholder="جميع المحافظات"></div>
+                </div>
+                <div class="form-group full-width">
+                    <label><i class="fas fa-credit-card label-icon"></i> وسائل الدفع</label>
+                    <div class="payment-methods">
+                        <div class="payment-checkbox"><input type="checkbox" id="cash" value="الدفع عند الاستلام" checked><label for="cash"><i class="fas fa-money-bill-wave"></i> الدفع عند الاستلام</label></div>
+                        <div class="payment-checkbox"><input type="checkbox" id="card" value="بطاقات الدفع" checked><label for="card"><i class="fas fa-credit-card"></i> بطاقات الدفع</label></div>
+                        <div class="payment-checkbox"><input type="checkbox" id="vodafone" value="فودافون كاش"><label for="vodafone"><i class="fas fa-mobile-alt"></i> فودافون كاش</label></div>
+                        <div class="payment-checkbox"><input type="checkbox" id="instapay" value="انستاباي"><label for="instapay"><i class="fas fa-bolt"></i> انستاباي</label></div>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <h3><i class="fas fa-hashtag"></i> وسائل التواصل الاجتماعي</h3>
+                    <p class="hint">ضيف روابط السوشيال ميديا للبراند. تقدر تمسح أي وسيلة لو البراند مش موجود عليها.</p>
+                    <div class="social-container">
+                        <div id="socialContainer"></div>
+                        <button type="button" class="add-social-btn" onclick="addSocial()"><i class="fas fa-plus-circle"></i> ضيف وسيلة تواصل جديدة</button>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <h3><i class="fas fa-utensils"></i> المنتجات</h3>
+                    <p class="hint">ضيف منتجات البراند هنا. كل منتج هيبقى ليه اسم، صورة، وسعر.</p>
+                    <div class="products-container">
+                        <div id="productsContainer">
+                            <div class="product-item">
+                                <div class="product-row">
+                                    <input type="text" class="product-name" placeholder="اسم المنتج">
+                                    <input type="url" class="product-image" placeholder="رابط صورة المنتج">
+                                    <input type="number" class="product-price" placeholder="السعر (ج.م)">
+                                    <div class="product-options">
+                                        <label class="checkbox-label"><input type="checkbox" class="product-new"> <i class="fas fa-certificate"></i> جديد</label>
+                                        <label class="checkbox-label"><input type="checkbox" class="product-out"> <i class="fas fa-ban"></i> نفذت</label>
+                                    </div>
+                                    <button type="button" class="btn-remove" onclick="removeProduct(this)"><i class="fas fa-trash"></i> مسح</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-add" onclick="addProduct()"><i class="fas fa-plus-circle"></i> ضيف منتج جديد</button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-primary pulse" onclick="generateJSON()"><i class="fas fa-eye"></i> شوف الـ JSON</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()"><i class="fas fa-redo"></i> ابدأ من جديد</button>
+                </div>
+            </section>
+            <section class="preview-section" id="previewSection">
+                <h2><i class="fas fa-code"></i> معاينة JSON</h2>
+                <div class="json-preview" id="jsonPreview"><p>JSON هيظهر هنا بعد ما تدخل البيانات وتدوس على "شوف الـ JSON".</p></div>
+                <div class="preview-actions">
+                    <button type="button" class="btn btn-copy" onclick="copyJSON()" id="copyBtn"><i class="fas fa-copy"></i> نسخ JSON</button>
+                    <span class="copy-message" id="copyMessage"><i class="fas fa-check-circle"></i> تم النسخ بنجاح!</span>
+                </div>
+                <div class="json-example">
+                    <h3><i class="fas fa-lightbulb"></i> تلميح:</h3>
+                    <p>الهيكل النهائي للـ JSON هيكون نفس الهيكل اللي في ملف الجوسون بتاعك.</p>
+                    <details><summary><i class="fas fa-code"></i> شوف مثال للهيكل الكامل</summary><pre>{
+  "brands": {
+    "brand_name": {
+      "name": "اسم البراند",
+      "orderUrl": "https://...",
+      "imageUrl": "https://...",
+      "description": "الوصف",
+      "rating": 4.4,
+      "deliveryTime": "7-5 ساعات",
+      "deliveryFee": "ج.م 65",
+      "minPrice": 50,
+      "maxPrice": 895,
+      "deliveryAreas": "جميع المحافظات",
+      "paymentMethods": ["الدفع عند الاستلام", "بطاقات الدفع"],
+      "socialMedia": {
+        "instagram": "https://instagram.com/...",
+        "facebook": "https://facebook.com/...",
+        "tiktok": "https://tiktok.com/@...",
+        "whatsapp": "201234567890",
+        "phone": "201234567890",
+        "website": "https://www.example.com"
+      },
+      "products": ["https://image1.jpg", "https://image2.jpg"],
+      "productsList": [
+        {
+          "name_product": "اسم المنتج",
+          "imageUrl": "https://image.jpg",
+          "price": "50",
+          "is_new": true,
+          "is_out_of_stock": false
+        }
+      ]
+    }
+  }
+}</pre></details>
+                </div>
+            </section>
+        </main>
+        <footer><p>Easyget &copy; <span id="currentYear"></span></p></footer>
+    </div>
+    <script>
+        // تعريف متغيرات عالمية
+        let socialMediaTypes = [
+            {id: 'instagram', name: 'إنستجرام', icon: 'fab fa-instagram', color: 'instagram', placeholder: 'https://instagram.com/username'},
+            {id: 'facebook', name: 'فيسبوك', icon: 'fab fa-facebook-f', color: 'facebook', placeholder: 'https://facebook.com/username'},
+            {id: 'tiktok', name: 'تيك توك', icon: 'fab fa-tiktok', color: 'tiktok', placeholder: 'https://tiktok.com/@username'},
+            {id: 'whatsapp', name: 'واتساب', icon: 'fab fa-whatsapp', color: 'whatsapp', placeholder: '201234567890'},
+            {id: 'phone', name: 'تليفون', icon: 'fas fa-phone', color: 'phone', placeholder: '201234567890'},
+            {id: 'website', name: 'موقع ويب', icon: 'fas fa-globe', color: 'website', placeholder: 'https://www.example.com'}
+        ];
+        let availableSocialTypes = [...socialMediaTypes];
+        let selectedSocialTypes = [];
+        let generatedJSON = null;
+
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            addSocialMedia('instagram');
+            addSocialMedia('facebook');
+            addSocialMedia('tiktok');
+        });
+
+        // دالة إضافة وسيلة تواصل اجتماعي
+        function addSocial() {
+            if (availableSocialTypes.length === 0) {
+                alert('كل وسائل التواصل متاحة بالفعل!');
+                return;
+            }
+            
+            const select = document.createElement('select');
+            select.className = 'social-select';
+            select.innerHTML = '<option value="">اختر وسيلة تواصل...</option>';
+            
+            availableSocialTypes.forEach(type => {
+                select.innerHTML += `<option value="${type.id}">${type.name}</option>`;
+            });
+            
+            select.onchange = function() {
+                if (this.value) {
+                    addSocialMedia(this.value);
+                    this.remove();
+                }
+            };
+            
+            document.getElementById('socialContainer').appendChild(select);
+        }
+
+        // دالة إضافة وسيلة تواصل محددة
+        function addSocialMedia(typeId) {
+            const type = socialMediaTypes.find(t => t.id === typeId);
+            if (!type) return;
+            
+            availableSocialTypes = availableSocialTypes.filter(t => t.id !== typeId);
+            selectedSocialTypes.push(type);
+            
+            const socialHTML = `
+                <div class="social-item" data-type="${type.id}">
+                    <div class="social-icon ${type.color}">
+                        <i class="${type.icon}"></i>
+                    </div>
+                    <input type="text" class="social-input" id="social_${type.id}" 
+                           placeholder="${type.placeholder}" data-type="${type.id}">
+                    <button type="button" class="remove-social" onclick="removeSocialMedia('${type.id}')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            const socialContainer = document.getElementById('socialContainer');
+            const selectElement = socialContainer.querySelector('select');
+            if (selectElement) selectElement.remove();
+            
+            socialContainer.insertAdjacentHTML('beforeend', socialHTML);
+        }
+
+        // دالة حذف وسيلة تواصل
+        function removeSocialMedia(typeId) {
+            const type = socialMediaTypes.find(t => t.id === typeId);
+            if (!type) return;
+            
+            availableSocialTypes.push(type);
+            selectedSocialTypes = selectedSocialTypes.filter(t => t.id !== typeId);
+            
+            const element = document.querySelector(`.social-item[data-type="${typeId}"]`);
+            if (element) element.remove();
+            
+            const input = document.getElementById(`social_${typeId}`);
+            if (input) input.value = '';
+        }
+
+        // دالة إضافة منتج جديد
+        function addProduct() {
+            const container = document.getElementById('productsContainer');
+            const newProduct = document.createElement('div');
+            newProduct.className = 'product-item';
+            newProduct.innerHTML = `
+                <div class="product-row">
+                    <input type="text" class="product-name" placeholder="اسم المنتج">
+                    <input type="url" class="product-image" placeholder="رابط صورة المنتج">
+                    <input type="number" class="product-price" placeholder="السعر (ج.م)">
+                    <div class="product-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="product-new"> <i class="fas fa-certificate"></i> جديد
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="product-out"> <i class="fas fa-ban"></i> نفذت
+                        </label>
+                    </div>
+                    <button type="button" class="btn-remove" onclick="removeProduct(this)">
+                        <i class="fas fa-trash"></i> مسح
+                    </button>
+                </div>
+            `;
+            container.appendChild(newProduct);
+        }
+
+        // دالة حذف منتج
+        function removeProduct(button) {
+            if (document.querySelectorAll('.product-item').length > 1) {
+                button.closest('.product-item').remove();
+            } else {
+                alert('لازم يبقى عندك منتج واحد على الأقل');
+            }
+        }
+
+        // دالة توليد JSON
+        function generateJSON() {
+            const brandName = document.getElementById('brandName').value.trim();
+            
+            if (!brandName) {
+                document.getElementById('errorAlert').style.display = 'flex';
+                setTimeout(() => document.getElementById('errorAlert').style.display = 'none', 3000);
+                return;
+            }
+
+            const brandData = {
+                name: brandName,
+                orderUrl: document.getElementById('orderUrl').value.trim(),
+                imageUrl: document.getElementById('imageUrl').value.trim(),
+                description: document.getElementById('description').value.trim(),
+                rating: parseFloat(document.getElementById('rating').value) || 0,
+                deliveryTime: document.getElementById('deliveryTime').value.trim(),
+                deliveryFee: document.getElementById('deliveryFee').value.trim(),
+                minPrice: parseInt(document.getElementById('minPrice').value) || 0,
+                maxPrice: parseInt(document.getElementById('maxPrice').value) || 0,
+                deliveryAreas: document.getElementById('deliveryAreas').value.trim(),
+                paymentMethods: Array.from(document.querySelectorAll('.payment-checkbox input:checked')).map(cb => cb.value),
+                socialMedia: {},
+                products: [],
+                productsList: []
+            };
+
+            // جمع بيانات السوشيال ميديا
+            selectedSocialTypes.forEach(type => {
+                const value = document.getElementById(`social_${type.id}`)?.value.trim();
+                if (value) {
+                    if (type.id === 'phone' || type.id === 'whatsapp') {
+                        brandData.socialMedia[type.id] = value.replace(/\D/g, '');
+                    } else {
+                        brandData.socialMedia[type.id] = value;
+                    }
+                }
+            });
+
+            // جمع المنتجات
+            document.querySelectorAll('.product-item').forEach(item => {
+                const name = item.querySelector('.product-name').value.trim();
+                const image = item.querySelector('.product-image').value.trim();
+                const price = item.querySelector('.product-price').value.trim();
+                const isNew = item.querySelector('.product-new').checked;
+                const isOut = item.querySelector('.product-out').checked;
+                
+                if (image) brandData.products.push(image);
+                
+                if (name && image && price) {
+                    const productObj = {
+                        name_product: name,
+                        imageUrl: image,
+                        price: price
+                    };
+                    
+                    if (isNew) productObj.is_new = true;
+                    if (isOut) productObj.is_out_of_stock = true;
+                    
+                    brandData.productsList.push(productObj);
+                }
+            });
+
+            // إنشاء مفتاح البراند
+            const brandKey = brandName.toLowerCase()
+                .replace(/\s+/g, '_')
+                .replace(/[^a-z0-9_]/g, '')
+                .replace(/_+/g, '_');
+
+            // إنشاء JSON النهائي
+            const finalJSON = {
+                brands: {
+                    [brandKey]: brandData
+                }
+            };
+
+            generatedJSON = JSON.stringify(finalJSON, null, 2);
+
+            // عرض JSON من اليسار
+            const jsonPreview = document.getElementById('jsonPreview');
+            jsonPreview.innerHTML = `<pre>${generatedJSON}</pre>`;
+            
+            // إظهار قسم المعاينة
+            document.getElementById('previewSection').style.display = 'block';
+            
+            // التمرير للنص
+            jsonPreview.scrollTop = 0;
+        }
+
+        // دالة نسخ JSON - معدلة للموبايل
+        function copyJSON() {
+            if (!generatedJSON) {
+                alert('أدخل البيانات أولاً وادوس على "شوف الـ JSON"');
+                return;
+            }
+
+            // طريقة تعمل على كل الأجهزة
+            const textArea = document.createElement('textarea');
+            textArea.value = generatedJSON;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopySuccess();
+                } else {
+                    // Fallback للـ Clipboard API
+                    navigator.clipboard.writeText(generatedJSON).then(showCopySuccess);
+                }
+            } catch (err) {
+                navigator.clipboard.writeText(generatedJSON).then(showCopySuccess);
+            }
+            
+            textArea.remove();
+        }
+
+        // دالة إظهار رسالة نجاح النسخ
+        function showCopySuccess() {
+            const copyMessage = document.getElementById('copyMessage');
+            copyMessage.classList.add('show');
+            document.getElementById('successAlert').style.display = 'flex';
+            
+            setTimeout(() => {
+                copyMessage.classList.remove('show');
+                document.getElementById('successAlert').style.display = 'none';
+            }, 2500);
+        }
+
+        // دالة إعادة تعيين النموذج
+        function resetForm() {
+            if (confirm('هل أنت متأكد إنك عايز تبدأ من جديد؟')) {
+                // مسح كل الحقول
+                document.querySelectorAll('input[type="text"], input[type="url"], input[type="number"], textarea').forEach(input => {
+                    input.value = '';
+                });
+                
+                // إعادة وسائل الدفع
+                document.getElementById('cash').checked = true;
+                document.getElementById('card').checked = true;
+                document.getElementById('vodafone').checked = false;
+                document.getElementById('instapay').checked = false;
+                
+                // إعادة السوشيال ميديا
+                document.getElementById('socialContainer').innerHTML = '';
+                availableSocialTypes = [...socialMediaTypes];
+                selectedSocialTypes = [];
+                addSocialMedia('instagram');
+                addSocialMedia('facebook');
+                addSocialMedia('tiktok');
+                
+                // إعادة المنتجات
+                const productsContainer = document.getElementById('productsContainer');
+                productsContainer.innerHTML = `
+                    <div class="product-item">
+                        <div class="product-row">
+                            <input type="text" class="product-name" placeholder="اسم المنتج">
+                            <input type="url" class="product-image" placeholder="رابط صورة المنتج">
+                            <input type="number" class="product-price" placeholder="السعر (ج.م)">
+                            <div class="product-options">
+                                <label class="checkbox-label"><input type="checkbox" class="product-new"> <i class="fas fa-certificate"></i> جديد</label>
+                                <label class="checkbox-label"><input type="checkbox" class="product-out"> <i class="fas fa-ban"></i> نفذت</label>
+                            </div>
+                            <button type="button" class="btn-remove" onclick="removeProduct(this)"><i class="fas fa-trash"></i> مسح</button>
+                        </div>
+                    </div>
+                `;
+                
+                // مسح المعاينة
+                document.getElementById('jsonPreview').innerHTML = '<p>JSON هيظهر هنا بعد ما تدخل البيانات وتدوس على "شوف الـ JSON".</p>';
+                document.getElementById('previewSection').style.display = 'none';
+                generatedJSON = null;
+            }
+        }
+    </script>
+</body>
+</html>
