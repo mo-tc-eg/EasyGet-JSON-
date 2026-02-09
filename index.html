@@ -9,8 +9,8 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         :root {
-            --primary-red: #e63946; --dark-red: #d00000; --light-red: #ff6b6b; --dark-bg: #1a1a2e;
-            --light-bg: #f8f9fa; --card-bg: #ffffff; --text-dark: #2d3436; --text-light: #636e72;
+            --primary-red: #e63946; --dark-red: #d00000; --light-red: #ff6b6b; --light-red2: #ff8a8a; --light-red3: #ffa8a8;
+            --dark-bg: #1a1a2e; --light-bg: #f8f9fa; --card-bg: #ffffff; --text-dark: #2d3436; --text-light: #636e72;
             --border-color: #dfe6e9; --shadow: 0 10px 30px rgba(230, 57, 70, 0.1);
             --shadow-hover: 0 15px 40px rgba(230, 57, 70, 0.2);
         }
@@ -116,39 +116,39 @@
         }
         .add-social-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(230, 57, 70, 0.25); }
         
-        /* قسم المنتجات العامة الجديد */
+        /* قسم المنتجات العامة الجديد - أحمر بدل أزرق */
         .general-products-container { 
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb); 
-            padding: 20px; border-radius: 12px; border: 2px dashed #64b5f6; 
+            background: linear-gradient(135deg, #fff5f5, #ffe6e6);  /* تغيير من أزرق لـ أحمر */
+            padding: 20px; border-radius: 12px; border: 2px dashed var(--light-red);  /* تغيير من أزرق لـ أحمر */
             margin-bottom: 20px;
         }
         .general-product-item {
             display: flex; gap: 10px; margin-bottom: 12px; align-items: center;
         }
         .general-product-url {
-            flex: 1; padding: 10px 15px; border: 2px solid #bbdefb; 
+            flex: 1; padding: 10px 15px; border: 2px solid var(--light-red3);  /* تغيير من أزرق لـ أحمر */
             border-radius: 8px; font-size: 0.9rem; background: white;
         }
         .general-product-url:focus {
             border-color: var(--primary-red); outline: none;
         }
         .btn-remove-general {
-            background: #ff8a80; color: white; border: none; 
+            background: var(--light-red); color: white; border: none;  /* تغيير من أزرق لـ أحمر */
             border-radius: 6px; padding: 8px 12px; cursor: pointer;
             transition: all 0.3s; display: flex; align-items: center; gap: 5px;
         }
         .btn-remove-general:hover {
-            background: #ff5252; transform: scale(1.05);
+            background: var(--primary-red); transform: scale(1.05);  /* تغيير من أزرق لـ أحمر */
         }
         .btn-add-general {
-            background: #42a5f5; color: white; border: none; 
+            background: linear-gradient(135deg, var(--primary-red), var(--light-red)); color: white; border: none;  /* تغيير من أزرق لـ أحمر */
             border-radius: 8px; padding: 10px 20px; cursor: pointer;
             transition: all 0.3s; display: inline-flex; align-items: center;
             gap: 8px; margin-top: 10px; font-weight: 600;
         }
         .btn-add-general:hover {
-            background: #2196f3; transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+            background: linear-gradient(135deg, var(--dark-red), var(--primary-red)); transform: translateY(-2px);  /* تغيير من أزرق لـ أحمر */
+            box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);  /* تغيير من أزرق لـ أحمر */
         }
         
         .products-container { background: linear-gradient(135deg, #fff5f5, #ffe6e6); padding: 20px; border-radius: 12px; border: 2px dashed var(--light-red); }
@@ -220,15 +220,15 @@
         .json-preview::-webkit-scrollbar-thumb:hover { background: #777; }
         .preview-actions { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
         .btn-copy {
-            background: linear-gradient(135deg, #10b981, #0da271); color: white;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red)); color: white;  /* تغيير من أخضر لـ أحمر */
             padding: 12px 24px; border: none; border-radius: 10px; font-size: 1rem;
             cursor: pointer; transition: all 0.3s; display: flex; align-items: center;
-            gap: 8px; font-weight: 600; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+            gap: 8px; font-weight: 600; box-shadow: 0 6px 20px rgba(230, 57, 70, 0.25);  /* تغيير من أخضر لـ أحمر */
             -webkit-tap-highlight-color: transparent; touch-action: manipulation;
             user-select: none; min-height: 44px;
         }
-        .btn-copy:hover, .btn-copy:active { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35); }
-        .copy-message { color: #10b981; font-weight: 600; font-size: 1rem; opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; gap: 8px; }
+        .btn-copy:hover, .btn-copy:active { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(230, 57, 70, 0.35); }  /* أحمر */
+        .copy-message { color: var(--primary-red); font-weight: 600; font-size: 1rem; opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; gap: 8px; }  /* أحمر */
         .copy-message.show { opacity: 1; }
         .json-example {
             background: linear-gradient(135deg, #fff5f5, #ffe6e6); padding: 20px;
@@ -350,7 +350,7 @@
                 <!-- القسم الجديد: صور المنتجات العامة -->
                 <div class="form-group full-width">
                     <h3><i class="fas fa-images"></i> صور أشهر منتجات البراند ( ممكن بردوا عروض البراند)</h3>
-                    <p class="hint">ضيف روابط صور أهشر المنتجات للبراند. كل صورة هتتضاف في الـ JSON في مصفوفة الـ products.</p>
+                    <p class="hint">ضيف روابط صور أشهر المنتجات للبراند. كل صورة هتتضاف في الـ JSON في مصفوفة الـ products.</p>
                     
                     <div class="general-products-container">
                         <div id="generalProductsContainer">
@@ -561,7 +561,7 @@
             if (document.querySelectorAll('.general-product-item').length > 1) {
                 button.closest('.general-product-item').remove();
             } else {
-                alert('لازم يبقى عندك صورة منتج عام واحدة على الأقل');
+                alert('لازم يبقى عندك صورة واحدة على الأقل');
             }
         }
 
@@ -796,4 +796,3 @@
     </script>
 </body>
 </html>
-
