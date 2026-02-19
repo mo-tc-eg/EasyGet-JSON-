@@ -927,16 +927,20 @@
             };
 
             // السوشيال ميديا
-            selectedSocialTypes.forEach(type => {
-                const value = document.getElementById(`social_${type.id}`)?.value.trim();
-                if (value) {
-                    if (type.id === 'phone' || type.id === 'whatsapp') {
-                        brandData.socialMedia[type.id] = value.replace(/\D/g, '');
-                    } else {
-                        brandData.socialMedia[type.id] = value;
-                    }
-                }
-            });
+            // السوشيال ميديا
+selectedSocialTypes.forEach(type => {
+    const value = document.getElementById(`social_${type.id}`)?.value.trim();
+    if (value) {
+        if (type.id === 'phone') {
+            brandData.socialMedia[type.id] = value.replace(/\D/g, '');
+        } else if (type.id === 'whatsapp') {
+            const num = value.replace(/\D/g, '');
+            brandData.socialMedia[type.id] = `https://wa.me/${num}`;
+        } else {
+            brandData.socialMedia[type.id] = value;
+        }
+    }
+});
 
             // المنتجات العامة
             document.querySelectorAll('.general-product-url').forEach(input => {
