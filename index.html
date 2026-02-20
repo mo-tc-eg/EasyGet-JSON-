@@ -26,7 +26,6 @@
             background: #e31b23;
             padding: 15px;
             text-align: center;
-            position: relative;
         }
 
         .brand-header h1 {
@@ -35,69 +34,42 @@
             font-weight: 700;
         }
 
-        /* أيقونة ChatGPT في الهيدر */
-        .chatgpt-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: white;
-            color: #e31b23;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border: 2px solid white;
-        }
-
-        .chatgpt-icon:hover {
-            background: #e31b23;
-            color: white;
-            transform: translateY(-50%) scale(1.1);
-            border-color: #e31b23;
-        }
-
-        /* مؤشر الحفظ التلقائي */
+        /* مؤشر الحفظ التلقائي المحسن */
         .auto-save-indicator {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             color: white;
-            padding: 8px 15px;
-            border-radius: 40px;
-            font-size: 0.85rem;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             z-index: 999;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: slideIn 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            direction: ltr;
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .auto-save-indicator.hidden {
+            transform: translateY(100px);
+            opacity: 0;
         }
 
         .auto-save-indicator i {
+            font-size: 1rem;
+        }
+
+        .auto-save-indicator .status-icon {
             color: #4CAF50;
         }
 
-        .auto-save-indicator.saving i {
+        .auto-save-indicator.saving .status-icon {
             color: #FFC107;
             animation: spin 1s linear infinite;
         }
@@ -105,6 +77,16 @@
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
+        }
+
+        .auto-save-indicator .text {
+            font-weight: 500;
+        }
+
+        .auto-save-indicator .time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-right: 5px;
         }
 
         /* الحاوية الرئيسية */
@@ -659,13 +641,6 @@
                 font-size: 1.6rem;
             }
             
-            .chatgpt-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 1.2rem;
-                left: 10px;
-            }
-            
             .main-container {
                 padding: 0 10px;
             }
@@ -710,23 +685,22 @@
             .auto-save-indicator {
                 bottom: 10px;
                 right: 10px;
-                font-size: 0.75rem;
-                padding: 6px 12px;
+                left: 10px;
+                width: auto;
+                font-size: 0.8rem;
+                padding: 8px 15px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- هيدر بسيط مع أيقونة ChatGPT -->
+    <!-- هيدر بسيط بدون أيقونة ChatGPT -->
     <div class="brand-header">
         <h1>EasyGet</h1>
-        <div class="chatgpt-icon" onclick="openChatGPT()" title="فتح ChatGPT">
-            <i class="fas fa-robot"></i>
-        </div>
     </div>
 
     <div class="main-container">
-        <!-- أقسام الصفحة (نفس المحتوى بدون تغيير) -->
+        <!-- أقسام الصفحة -->
         <div class="section-wrapper">
             <h2 class="section-title"><i class="fas fa-store"></i> بيانات البراند الأساسية</h2>
             
@@ -768,6 +742,13 @@
 
                 <div class="field-card">
                     <div class="field-label">
+                        <i class="fas fa-map-marker-alt"></i> مناطق التوصيل
+                    </div>
+                    <input type="text" id="deliveryAreas" placeholder="مثال: جميع المحافظات" oninput="autoSaveData()">
+                </div>
+
+                <div class="field-card">
+                    <div class="field-label">
                         <i class="fas fa-money-bill"></i> رسوم التوصيل
                     </div>
                     <input type="text" id="deliveryFee" placeholder="مثال: 25 ج.م" oninput="autoSaveData()">
@@ -785,13 +766,6 @@
                         <i class="fas fa-tags"></i> أعلى سعر
                     </div>
                     <input type="number" id="maxPrice" placeholder="مثال: 500" oninput="autoSaveData()">
-                </div>
-
-                <div class="field-card" style="grid-column: 1/-1;">
-                    <div class="field-label">
-                        <i class="fas fa-map-marker-alt"></i> مناطق التوصيل
-                    </div>
-                    <input type="text" id="deliveryAreas" placeholder="مثال: جميع المحافظات" oninput="autoSaveData()">
                 </div>
             </div>
         </div>
@@ -873,10 +847,11 @@
         <p>Mo Tc &copy; <span id="currentYear"></span></p>
     </div>
 
-    <!-- مؤشر الحفظ التلقائي -->
-    <div class="auto-save-indicator" id="autoSaveIndicator" style="display: none;">
-        <i class="fas fa-check-circle"></i>
-        <span id="autoSaveText">تم الحفظ تلقائياً</span>
+    <!-- مؤشر الحفظ التلقائي المحسن -->
+    <div class="auto-save-indicator hidden" id="autoSaveIndicator">
+        <i class="fas fa-check-circle status-icon"></i>
+        <span class="text" id="autoSaveText">تم الحفظ</span>
+        <span class="time" id="autoSaveTime"></span>
     </div>
 
     <!-- ===== Popup للرسائل ===== -->
@@ -910,6 +885,7 @@
         let availableSocialTypes = [...socialMediaTypes];
         let selectedSocialTypes = [];
         let autoSaveTimeout;
+        let lastSaveTime = null;
 
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
@@ -927,33 +903,41 @@
             checkForDataOnReload();
         });
 
-        // دالة فتح ChatGPT
-        function openChatGPT() {
-            window.open('https://chat.openai.com', '_blank');
+        // دوال الحفظ التلقائي المحسنة
+        function formatTime(date) {
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const seconds = date.getSeconds().toString().padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
         }
 
-        // دوال الحفظ التلقائي
         function showAutoSaveIndicator(text, isSaving = false) {
             const indicator = document.getElementById('autoSaveIndicator');
-            const icon = indicator.querySelector('i');
+            const icon = indicator.querySelector('.status-icon');
             const textEl = document.getElementById('autoSaveText');
+            const timeEl = document.getElementById('autoSaveTime');
             
             textEl.textContent = text;
             
             if (isSaving) {
-                icon.className = 'fas fa-spinner';
+                icon.className = 'fas fa-spinner status-icon';
                 indicator.classList.add('saving');
+                timeEl.textContent = '';
             } else {
-                icon.className = 'fas fa-check-circle';
+                icon.className = 'fas fa-check-circle status-icon';
                 indicator.classList.remove('saving');
+                
+                const now = new Date();
+                timeEl.textContent = `آخر حفظ: ${formatTime(now)}`;
+                lastSaveTime = now;
             }
             
-            indicator.style.display = 'flex';
+            indicator.classList.remove('hidden');
             
             // إخفاء المؤشر بعد 3 ثواني
             clearTimeout(autoSaveTimeout);
             autoSaveTimeout = setTimeout(() => {
-                indicator.style.display = 'none';
+                indicator.classList.add('hidden');
             }, 3000);
         }
 
@@ -966,10 +950,10 @@
                         imageUrl: document.getElementById('imageUrl').value,
                         description: document.getElementById('description').value,
                         deliveryTime: document.getElementById('deliveryTime').value,
+                        deliveryAreas: document.getElementById('deliveryAreas').value,
                         deliveryFee: document.getElementById('deliveryFee').value,
                         minPrice: document.getElementById('minPrice').value,
-                        maxPrice: document.getElementById('maxPrice').value,
-                        deliveryAreas: document.getElementById('deliveryAreas').value
+                        maxPrice: document.getElementById('maxPrice').value
                     },
                     payment: {
                         cash: document.getElementById('cash').checked,
@@ -1019,6 +1003,7 @@
                 
             } catch (error) {
                 console.error('خطأ في الحفظ:', error);
+                showAutoSaveIndicator('فشل الحفظ');
             }
         }
 
@@ -1026,17 +1011,22 @@
             // إظهار مؤشر "جاري الحفظ"
             showAutoSaveIndicator('جاري الحفظ...', true);
             
-            // استخدام debounce عشان منحفظش كتير
+            // استخدام debounce عشان منحفظش كتير - تأخير 1.5 ثانية بعد آخر تعديل
             clearTimeout(window.saveTimeout);
             window.saveTimeout = setTimeout(() => {
                 saveAllData();
-            }, 1000);
+            }, 1500);
         }
 
         function loadSavedData() {
             try {
                 const savedData = localStorage.getItem(STORAGE_KEY);
-                if (!savedData) return;
+                if (!savedData) {
+                    // إضافة منتج عام افتراضي ومنتج تفصيلي افتراضي إذا مفيش بيانات
+                    addGeneralProduct();
+                    addProduct();
+                    return;
+                }
 
                 const data = JSON.parse(savedData);
 
@@ -1047,10 +1037,10 @@
                     document.getElementById('imageUrl').value = data.basic.imageUrl || '';
                     document.getElementById('description').value = data.basic.description || '';
                     document.getElementById('deliveryTime').value = data.basic.deliveryTime || '';
+                    document.getElementById('deliveryAreas').value = data.basic.deliveryAreas || '';
                     document.getElementById('deliveryFee').value = data.basic.deliveryFee || '';
                     document.getElementById('minPrice').value = data.basic.minPrice || '';
                     document.getElementById('maxPrice').value = data.basic.maxPrice || '';
-                    document.getElementById('deliveryAreas').value = data.basic.deliveryAreas || '';
                 }
 
                 // تحميل وسائل الدفع
@@ -1102,8 +1092,16 @@
                     addProduct();
                 }
 
+                // إظهار آخر وقت حفظ إذا موجود
+                if (lastSaveTime) {
+                    showAutoSaveIndicator('تم تحميل البيانات');
+                }
+
             } catch (error) {
                 console.error('خطأ في تحميل البيانات:', error);
+                // في حالة الخطأ، نضيف العناصر الافتراضية
+                addGeneralProduct();
+                addProduct();
             }
         }
 
@@ -1113,7 +1111,7 @@
             const newProduct = document.createElement('div');
             newProduct.className = 'general-product-item';
             newProduct.innerHTML = `
-                <input type="url" class="general-product-url" placeholder="https://example.com/product.jpg" value="${url}">
+                <input type="url" class="general-product-url" placeholder="https://example.com/product.jpg" value="${url}" oninput="autoSaveData()">
                 <button type="button" class="btn-remove-general" onclick="removeGeneralProduct(this)">
                     <i class="fas fa-times"></i> مسح
                 </button>
@@ -1127,15 +1125,15 @@
             newProduct.className = 'product-item';
             newProduct.innerHTML = `
                 <div class="product-row">
-                    <input type="text" class="product-name" placeholder="اسم المنتج" value="${product.name || ''}">
-                    <input type="url" class="product-image" placeholder="رابط الصورة" value="${product.image || ''}">
-                    <input type="number" class="product-price" placeholder="السعر" value="${product.price || ''}">
+                    <input type="text" class="product-name" placeholder="اسم المنتج" value="${product.name || ''}" oninput="autoSaveData()">
+                    <input type="url" class="product-image" placeholder="رابط الصورة" value="${product.image || ''}" oninput="autoSaveData()">
+                    <input type="number" class="product-price" placeholder="السعر" value="${product.price || ''}" oninput="autoSaveData()">
                     <div class="product-options">
                         <label class="product-checkbox">
-                            <input type="checkbox" class="product-new" ${product.isNew ? 'checked' : ''}> جديد
+                            <input type="checkbox" class="product-new" ${product.isNew ? 'checked' : ''} onchange="autoSaveData()"> جديد
                         </label>
                         <label class="product-checkbox">
-                            <input type="checkbox" class="product-out" ${product.isOut ? 'checked' : ''}> نفذت
+                            <input type="checkbox" class="product-out" ${product.isOut ? 'checked' : ''} onchange="autoSaveData()"> نفذت
                         </label>
                     </div>
                     <button type="button" class="btn-remove-product" onclick="removeProduct(this)">
@@ -1174,10 +1172,10 @@
             const description = document.getElementById('description').value.trim();
             
             const deliveryTime = document.getElementById('deliveryTime').value.trim();
+            const deliveryAreas = document.getElementById('deliveryAreas').value.trim();
             const deliveryFee = document.getElementById('deliveryFee').value.trim();
             const minPrice = document.getElementById('minPrice').value.trim();
             const maxPrice = document.getElementById('maxPrice').value.trim();
-            const deliveryAreas = document.getElementById('deliveryAreas').value.trim();
             
             let hasSocialData = false;
             selectedSocialTypes.forEach(type => {
@@ -1199,9 +1197,8 @@
             });
             
             return brandName || orderUrl || imageUrl || description || 
-                   deliveryTime || deliveryFee || minPrice || maxPrice || 
-                   deliveryAreas || hasSocialData || hasGeneralProducts || 
-                   hasDetailedProducts;
+                   deliveryTime || deliveryAreas || deliveryFee || minPrice || maxPrice || 
+                   hasSocialData || hasGeneralProducts || hasDetailedProducts;
         }
 
         // دوال السوشيال ميديا
@@ -1364,10 +1361,10 @@
                 imageUrl: document.getElementById('imageUrl').value.trim(),
                 description: document.getElementById('description').value.trim(),
                 deliveryTime: document.getElementById('deliveryTime').value.trim(),
+                deliveryAreas: document.getElementById('deliveryAreas').value.trim(),
                 deliveryFee: document.getElementById('deliveryFee').value.trim(),
                 minPrice: parseInt(document.getElementById('minPrice').value) || 0,
                 maxPrice: parseInt(document.getElementById('maxPrice').value) || 0,
-                deliveryAreas: document.getElementById('deliveryAreas').value.trim(),
                 paymentMethods: Array.from(document.querySelectorAll('.payment-option input:checked')).map(cb => cb.value),
                 socialMedia: {},
                 products: [],
@@ -1501,10 +1498,10 @@
             document.getElementById('imageUrl').value = '';
             document.getElementById('description').value = '';
             document.getElementById('deliveryTime').value = '';
+            document.getElementById('deliveryAreas').value = '';
             document.getElementById('deliveryFee').value = '';
             document.getElementById('minPrice').value = '';
             document.getElementById('maxPrice').value = '';
-            document.getElementById('deliveryAreas').value = '';
             
             document.querySelectorAll('.payment-option input').forEach(cb => {
                 if (cb.id === 'cash' || cb.id === 'card') {
