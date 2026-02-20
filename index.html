@@ -34,61 +34,6 @@
             font-weight: 700;
         }
 
-        /* مؤشر الحفظ التلقائي المحسن */
-        .auto-save-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 999;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transform: translateY(0);
-            transition: all 0.3s ease;
-            direction: ltr;
-        }
-
-        .auto-save-indicator.hidden {
-            transform: translateY(100px);
-            opacity: 0;
-        }
-
-        .auto-save-indicator i {
-            font-size: 1rem;
-        }
-
-        .auto-save-indicator .status-icon {
-            color: #4CAF50;
-        }
-
-        .auto-save-indicator.saving .status-icon {
-            color: #FFC107;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .auto-save-indicator .text {
-            font-weight: 500;
-        }
-
-        .auto-save-indicator .time {
-            font-size: 0.75rem;
-            opacity: 0.7;
-            margin-right: 5px;
-        }
-
         /* الحاوية الرئيسية */
         .main-container {
             max-width: 1200px;
@@ -556,10 +501,6 @@
             color: #333;
         }
 
-        .popup-title.warning {
-            color: #e31b23;
-        }
-
         .popup-message {
             color: #666;
             margin-bottom: 20px;
@@ -681,26 +622,17 @@
             .popup-buttons {
                 flex-direction: column;
             }
-            
-            .auto-save-indicator {
-                bottom: 10px;
-                right: 10px;
-                left: 10px;
-                width: auto;
-                font-size: 0.8rem;
-                padding: 8px 15px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- هيدر بسيط بدون أيقونة ChatGPT -->
+    <!-- هيدر بسيط بدون أيقونة ولا نص -->
     <div class="brand-header">
         <h1>EasyGet</h1>
     </div>
 
     <div class="main-container">
-        <!-- أقسام الصفحة -->
+        <!-- أقسام الصفحة (نفس المحتوى بدون تغيير) -->
         <div class="section-wrapper">
             <h2 class="section-title"><i class="fas fa-store"></i> بيانات البراند الأساسية</h2>
             
@@ -709,63 +641,63 @@
                     <div class="field-label">
                         <i class="fas fa-store"></i> اسم البراند <span class="required-star">*</span>
                     </div>
-                    <input type="text" id="brandName" placeholder="مثال: Fati's" oninput="autoSaveData()">
+                    <input type="text" id="brandName" placeholder="مثال: Fati's">
                 </div>
 
                 <div class="field-card">
                     <div class="field-label">
                         <i class="fas fa-shopping-cart"></i> رابط الطلب <span class="required-star">*</span>
                     </div>
-                    <input type="url" id="orderUrl" placeholder="https://example.com" oninput="autoSaveData()">
+                    <input type="url" id="orderUrl" placeholder="https://example.com">
                 </div>
 
                 <div class="field-card">
                     <div class="field-label">
                         <i class="fas fa-image"></i> صورة اللوجو <span class="required-star">*</span>
                     </div>
-                    <input type="url" id="imageUrl" placeholder="https://example.com/logo.jpg" oninput="autoSaveData()">
+                    <input type="url" id="imageUrl" placeholder="https://example.com/logo.jpg">
                 </div>
 
                 <div class="field-card">
                     <div class="field-label">
                         <i class="fas fa-file-alt"></i> الوصف <span class="required-star">*</span>
                     </div>
-                    <textarea id="description" placeholder="وصف البراند..." oninput="autoSaveData()"></textarea>
+                    <textarea id="description" placeholder="وصف البراند..."></textarea>
                 </div>
 
                 <div class="field-card">
                     <div class="field-label">
                         <i class="fas fa-clock"></i> وقت التوصيل
                     </div>
-                    <input type="text" id="deliveryTime" placeholder="مثال: 30-45 دقيقة" oninput="autoSaveData()">
-                </div>
-
-                <div class="field-card">
-                    <div class="field-label">
-                        <i class="fas fa-map-marker-alt"></i> مناطق التوصيل
-                    </div>
-                    <input type="text" id="deliveryAreas" placeholder="مثال: جميع المحافظات" oninput="autoSaveData()">
+                    <input type="text" id="deliveryTime" placeholder="مثال: 30-45 دقيقة">
                 </div>
 
                 <div class="field-card">
                     <div class="field-label">
                         <i class="fas fa-money-bill"></i> رسوم التوصيل
                     </div>
-                    <input type="text" id="deliveryFee" placeholder="مثال: 25 ج.م" oninput="autoSaveData()">
+                    <input type="text" id="deliveryFee" placeholder="مثال: 25 ج.م">
                 </div>
 
                 <div class="field-card">
                     <div class="field-label">
                         <i class="fas fa-tag"></i> أقل سعر
                     </div>
-                    <input type="number" id="minPrice" placeholder="مثال: 50" oninput="autoSaveData()">
+                    <input type="number" id="minPrice" placeholder="مثال: 50">
                 </div>
 
                 <div class="field-card">
                     <div class="field-label">
                         <i class="fas fa-tags"></i> أعلى سعر
                     </div>
-                    <input type="number" id="maxPrice" placeholder="مثال: 500" oninput="autoSaveData()">
+                    <input type="number" id="maxPrice" placeholder="مثال: 500">
+                </div>
+
+                <div class="field-card" style="grid-column: 1/-1;">
+                    <div class="field-label">
+                        <i class="fas fa-map-marker-alt"></i> مناطق التوصيل
+                    </div>
+                    <input type="text" id="deliveryAreas" placeholder="مثال: جميع المحافظات">
                 </div>
             </div>
         </div>
@@ -777,19 +709,19 @@
             <div class="payment-container">
                 <div class="payment-grid">
                     <div class="payment-option">
-                        <input type="checkbox" id="cash" value="الدفع عند الاستلام" checked onchange="autoSaveData()">
+                        <input type="checkbox" id="cash" value="الدفع عند الاستلام" checked>
                         <label for="cash"><i class="fas fa-money-bill-wave"></i> الدفع عند الاستلام</label>
                     </div>
                     <div class="payment-option">
-                        <input type="checkbox" id="card" value="بطاقات الدفع" checked onchange="autoSaveData()">
+                        <input type="checkbox" id="card" value="بطاقات الدفع" checked>
                         <label for="card"><i class="fas fa-credit-card"></i> بطاقات الدفع</label>
                     </div>
                     <div class="payment-option">
-                        <input type="checkbox" id="vodafone" value="فودافون كاش" onchange="autoSaveData()">
+                        <input type="checkbox" id="vodafone" value="فودافون كاش">
                         <label for="vodafone"><i class="fas fa-mobile-alt"></i> فودافون كاش</label>
                     </div>
                     <div class="payment-option">
-                        <input type="checkbox" id="instapay" value="انستاباي" onchange="autoSaveData()">
+                        <input type="checkbox" id="instapay" value="انستاباي">
                         <label for="instapay"><i class="fas fa-bolt"></i> انستاباي</label>
                     </div>
                 </div>
@@ -813,7 +745,14 @@
             <h2 class="section-title"><i class="fas fa-images"></i>صور أشهر منتجات البراند أو العروض</h2>
             
             <div class="general-products-wrapper">
-                <div id="generalProductsContainer"></div>
+                <div id="generalProductsContainer">
+                    <div class="general-product-item">
+                        <input type="url" class="general-product-url" placeholder="https://example.com/product1.jpg">
+                        <button type="button" class="btn-remove-general" onclick="removeGeneralProduct(this)">
+                            <i class="fas fa-times"></i> مسح
+                        </button>
+                    </div>
+                </div>
                 <button type="button" class="btn-add-general" onclick="addGeneralProduct()">
                     <i class="fas fa-plus"></i> إضافة صورة منتج
                 </button>
@@ -825,7 +764,26 @@
             <h2 class="section-title"><i class="fas fa-box"></i>منتجات البراند</h2>
             
             <div class="products-wrapper">
-                <div id="productsContainer"></div>
+                <div id="productsContainer">
+                    <div class="product-item">
+                        <div class="product-row">
+                            <input type="text" class="product-name" placeholder="اسم المنتج">
+                            <input type="url" class="product-image" placeholder="رابط الصورة">
+                            <input type="number" class="product-price" placeholder="السعر">
+                            <div class="product-options">
+                                <label class="product-checkbox">
+                                    <input type="checkbox" class="product-new"> جديد
+                                </label>
+                                <label class="product-checkbox">
+                                    <input type="checkbox" class="product-out"> نفذ
+                                </label>
+                            </div>
+                            <button type="button" class="btn-remove-product" onclick="removeProduct(this)">
+                                <i class="fas fa-trash"></i> مسح
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <button type="button" class="btn-add-product" onclick="addProduct()">
                     <i class="fas fa-plus-circle"></i> إضافة منتج جديد
                 </button>
@@ -847,13 +805,6 @@
         <p>Mo Tc &copy; <span id="currentYear"></span></p>
     </div>
 
-    <!-- مؤشر الحفظ التلقائي المحسن -->
-    <div class="auto-save-indicator hidden" id="autoSaveIndicator">
-        <i class="fas fa-check-circle status-icon"></i>
-        <span class="text" id="autoSaveText">تم الحفظ</span>
-        <span class="time" id="autoSaveTime"></span>
-    </div>
-
     <!-- ===== Popup للرسائل ===== -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-card" id="popupCard">
@@ -871,7 +822,6 @@
     <script>
         // المتغيرات العامة
         const ACCESS_KEY = '363a4f82-d24b-4095-85dd-fcb8d3605a84';
-        const STORAGE_KEY = 'easyget_form_data';
         
         let socialMediaTypes = [
             {id: 'instagram', name: 'إنستجرام', icon: 'fab fa-instagram', placeholder: 'https://instagram.com/username'},
@@ -884,8 +834,6 @@
         
         let availableSocialTypes = [...socialMediaTypes];
         let selectedSocialTypes = [];
-        let autoSaveTimeout;
-        let lastSaveTime = null;
 
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
@@ -896,258 +844,16 @@
             addSocialMedia('facebook');
             addSocialMedia('tiktok');
 
-            // تحميل البيانات المحفوظة
-            loadSavedData();
-
             // التحقق من وجود بيانات محفوظة عند إعادة التحميل
             checkForDataOnReload();
         });
 
-        // دوال الحفظ التلقائي المحسنة
-        function formatTime(date) {
-            const hours = date.getHours().toString().padStart(2, '0');
-            const minutes = date.getMinutes().toString().padStart(2, '0');
-            const seconds = date.getSeconds().toString().padStart(2, '0');
-            return `${hours}:${minutes}:${seconds}`;
-        }
-
-        function showAutoSaveIndicator(text, isSaving = false) {
-            const indicator = document.getElementById('autoSaveIndicator');
-            const icon = indicator.querySelector('.status-icon');
-            const textEl = document.getElementById('autoSaveText');
-            const timeEl = document.getElementById('autoSaveTime');
-            
-            textEl.textContent = text;
-            
-            if (isSaving) {
-                icon.className = 'fas fa-spinner status-icon';
-                indicator.classList.add('saving');
-                timeEl.textContent = '';
-            } else {
-                icon.className = 'fas fa-check-circle status-icon';
-                indicator.classList.remove('saving');
-                
-                const now = new Date();
-                timeEl.textContent = `آخر حفظ: ${formatTime(now)}`;
-                lastSaveTime = now;
-            }
-            
-            indicator.classList.remove('hidden');
-            
-            // إخفاء المؤشر بعد 3 ثواني
-            clearTimeout(autoSaveTimeout);
-            autoSaveTimeout = setTimeout(() => {
-                indicator.classList.add('hidden');
-            }, 3000);
-        }
-
-        function saveAllData() {
-            try {
-                const data = {
-                    basic: {
-                        brandName: document.getElementById('brandName').value,
-                        orderUrl: document.getElementById('orderUrl').value,
-                        imageUrl: document.getElementById('imageUrl').value,
-                        description: document.getElementById('description').value,
-                        deliveryTime: document.getElementById('deliveryTime').value,
-                        deliveryAreas: document.getElementById('deliveryAreas').value,
-                        deliveryFee: document.getElementById('deliveryFee').value,
-                        minPrice: document.getElementById('minPrice').value,
-                        maxPrice: document.getElementById('maxPrice').value
-                    },
-                    payment: {
-                        cash: document.getElementById('cash').checked,
-                        card: document.getElementById('card').checked,
-                        vodafone: document.getElementById('vodafone').checked,
-                        instapay: document.getElementById('instapay').checked
-                    },
-                    social: {
-                        selectedTypes: selectedSocialTypes,
-                        availableTypes: availableSocialTypes,
-                        values: {}
-                    },
-                    generalProducts: [],
-                    detailedProducts: []
-                };
-
-                // حفظ قيم السوشيال ميديا
-                selectedSocialTypes.forEach(type => {
-                    const input = document.getElementById(`social_${type.id}`);
-                    if (input) {
-                        data.social.values[type.id] = input.value;
-                    }
-                });
-
-                // حفظ المنتجات العامة
-                document.querySelectorAll('.general-product-url').forEach(input => {
-                    data.generalProducts.push(input.value);
-                });
-
-                // حفظ المنتجات التفصيلية
-                document.querySelectorAll('.product-item').forEach(item => {
-                    const product = {
-                        name: item.querySelector('.product-name').value,
-                        image: item.querySelector('.product-image').value,
-                        price: item.querySelector('.product-price').value,
-                        isNew: item.querySelector('.product-new').checked,
-                        isOut: item.querySelector('.product-out').checked
-                    };
-                    data.detailedProducts.push(product);
-                });
-
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-                showAutoSaveIndicator('تم الحفظ تلقائياً');
-                
-                // تحديث حالة التخزين للريلود
-                sessionStorage.setItem('hasFormData', 'true');
-                
-            } catch (error) {
-                console.error('خطأ في الحفظ:', error);
-                showAutoSaveIndicator('فشل الحفظ');
-            }
-        }
-
-        function autoSaveData() {
-            // إظهار مؤشر "جاري الحفظ"
-            showAutoSaveIndicator('جاري الحفظ...', true);
-            
-            // استخدام debounce عشان منحفظش كتير - تأخير 1.5 ثانية بعد آخر تعديل
-            clearTimeout(window.saveTimeout);
-            window.saveTimeout = setTimeout(() => {
-                saveAllData();
-            }, 1500);
-        }
-
-        function loadSavedData() {
-            try {
-                const savedData = localStorage.getItem(STORAGE_KEY);
-                if (!savedData) {
-                    // إضافة منتج عام افتراضي ومنتج تفصيلي افتراضي إذا مفيش بيانات
-                    addGeneralProduct();
-                    addProduct();
-                    return;
-                }
-
-                const data = JSON.parse(savedData);
-
-                // تحميل البيانات الأساسية
-                if (data.basic) {
-                    document.getElementById('brandName').value = data.basic.brandName || '';
-                    document.getElementById('orderUrl').value = data.basic.orderUrl || '';
-                    document.getElementById('imageUrl').value = data.basic.imageUrl || '';
-                    document.getElementById('description').value = data.basic.description || '';
-                    document.getElementById('deliveryTime').value = data.basic.deliveryTime || '';
-                    document.getElementById('deliveryAreas').value = data.basic.deliveryAreas || '';
-                    document.getElementById('deliveryFee').value = data.basic.deliveryFee || '';
-                    document.getElementById('minPrice').value = data.basic.minPrice || '';
-                    document.getElementById('maxPrice').value = data.basic.maxPrice || '';
-                }
-
-                // تحميل وسائل الدفع
-                if (data.payment) {
-                    document.getElementById('cash').checked = data.payment.cash ?? true;
-                    document.getElementById('card').checked = data.payment.card ?? true;
-                    document.getElementById('vodafone').checked = data.payment.vodafone ?? false;
-                    document.getElementById('instapay').checked = data.payment.instapay ?? false;
-                }
-
-                // تحميل السوشيال ميديا
-                if (data.social) {
-                    // إعادة تعيين السوشيال ميديا
-                    const socialContainer = document.getElementById('socialContainer');
-                    socialContainer.innerHTML = '';
-                    
-                    selectedSocialTypes = data.social.selectedTypes || [];
-                    availableSocialTypes = data.social.availableTypes || [...socialMediaTypes];
-                    
-                    // إضافة وسائل التواصل المحفوظة
-                    selectedSocialTypes.forEach(type => {
-                        addSocialMedia(type.id, data.social.values[type.id] || '');
-                    });
-                }
-
-                // تحميل المنتجات العامة
-                if (data.generalProducts && data.generalProducts.length > 0) {
-                    const generalContainer = document.getElementById('generalProductsContainer');
-                    generalContainer.innerHTML = '';
-                    
-                    data.generalProducts.forEach(url => {
-                        addGeneralProductWithValue(url);
-                    });
-                } else {
-                    // إضافة منتج عام افتراضي
-                    addGeneralProduct();
-                }
-
-                // تحميل المنتجات التفصيلية
-                if (data.detailedProducts && data.detailedProducts.length > 0) {
-                    const productsContainer = document.getElementById('productsContainer');
-                    productsContainer.innerHTML = '';
-                    
-                    data.detailedProducts.forEach(product => {
-                        addProductWithValues(product);
-                    });
-                } else {
-                    // إضافة منتج تفصيلي افتراضي
-                    addProduct();
-                }
-
-                // إظهار آخر وقت حفظ إذا موجود
-                if (lastSaveTime) {
-                    showAutoSaveIndicator('تم تحميل البيانات');
-                }
-
-            } catch (error) {
-                console.error('خطأ في تحميل البيانات:', error);
-                // في حالة الخطأ، نضيف العناصر الافتراضية
-                addGeneralProduct();
-                addProduct();
-            }
-        }
-
-        // دوال إضافة المنتجات مع القيم المحفوظة
-        function addGeneralProductWithValue(url) {
-            const container = document.getElementById('generalProductsContainer');
-            const newProduct = document.createElement('div');
-            newProduct.className = 'general-product-item';
-            newProduct.innerHTML = `
-                <input type="url" class="general-product-url" placeholder="https://example.com/product.jpg" value="${url}" oninput="autoSaveData()">
-                <button type="button" class="btn-remove-general" onclick="removeGeneralProduct(this)">
-                    <i class="fas fa-times"></i> مسح
-                </button>
-            `;
-            container.appendChild(newProduct);
-        }
-
-        function addProductWithValues(product) {
-            const container = document.getElementById('productsContainer');
-            const newProduct = document.createElement('div');
-            newProduct.className = 'product-item';
-            newProduct.innerHTML = `
-                <div class="product-row">
-                    <input type="text" class="product-name" placeholder="اسم المنتج" value="${product.name || ''}" oninput="autoSaveData()">
-                    <input type="url" class="product-image" placeholder="رابط الصورة" value="${product.image || ''}" oninput="autoSaveData()">
-                    <input type="number" class="product-price" placeholder="السعر" value="${product.price || ''}" oninput="autoSaveData()">
-                    <div class="product-options">
-                        <label class="product-checkbox">
-                            <input type="checkbox" class="product-new" ${product.isNew ? 'checked' : ''} onchange="autoSaveData()"> جديد
-                        </label>
-                        <label class="product-checkbox">
-                            <input type="checkbox" class="product-out" ${product.isOut ? 'checked' : ''} onchange="autoSaveData()"> نفذت
-                        </label>
-                    </div>
-                    <button type="button" class="btn-remove-product" onclick="removeProduct(this)">
-                        <i class="fas fa-trash"></i> مسح
-                    </button>
-                </div>
-            `;
-            container.appendChild(newProduct);
-        }
-
         // التحقق عند إعادة تحميل الصفحة
         function checkForDataOnReload() {
+            // بنستخدم sessionStorage عشان نعرف لو في بيانات قبل الريلود
             const hasData = sessionStorage.getItem('hasFormData');
             
+            // لو في بيانات قبل كدة وعمل ريلود
             if (hasData === 'true' && hasAnyData()) {
                 showConfirmPopup(
                     'تحذير!',
@@ -1155,12 +861,23 @@
                     function() {
                         resetAllData();
                         sessionStorage.removeItem('hasFormData');
-                        localStorage.removeItem(STORAGE_KEY);
                     },
                     function() {
                         // لو ضغط إلغاء منعملش حاجة
                     }
                 );
+            }
+            
+            // تحديث حالة التخزين كل 5 ثواني
+            setInterval(updateStorageState, 5000);
+        }
+
+        // تحديث حالة التخزين
+        function updateStorageState() {
+            if (hasAnyData()) {
+                sessionStorage.setItem('hasFormData', 'true');
+            } else {
+                sessionStorage.removeItem('hasFormData');
             }
         }
 
@@ -1171,23 +888,27 @@
             const imageUrl = document.getElementById('imageUrl').value.trim();
             const description = document.getElementById('description').value.trim();
             
+            // كمان نتأكد من أي حقول تانية
             const deliveryTime = document.getElementById('deliveryTime').value.trim();
-            const deliveryAreas = document.getElementById('deliveryAreas').value.trim();
             const deliveryFee = document.getElementById('deliveryFee').value.trim();
             const minPrice = document.getElementById('minPrice').value.trim();
             const maxPrice = document.getElementById('maxPrice').value.trim();
+            const deliveryAreas = document.getElementById('deliveryAreas').value.trim();
             
+            // السوشيال ميديا
             let hasSocialData = false;
             selectedSocialTypes.forEach(type => {
                 const value = document.getElementById(`social_${type.id}`)?.value.trim();
                 if (value) hasSocialData = true;
             });
             
+            // المنتجات العامة
             let hasGeneralProducts = false;
             document.querySelectorAll('.general-product-url').forEach(input => {
                 if (input.value.trim()) hasGeneralProducts = true;
             });
             
+            // المنتجات التفصيلية
             let hasDetailedProducts = false;
             document.querySelectorAll('.product-item').forEach(item => {
                 const name = item.querySelector('.product-name').value.trim();
@@ -1197,8 +918,9 @@
             });
             
             return brandName || orderUrl || imageUrl || description || 
-                   deliveryTime || deliveryAreas || deliveryFee || minPrice || maxPrice || 
-                   hasSocialData || hasGeneralProducts || hasDetailedProducts;
+                   deliveryTime || deliveryFee || minPrice || maxPrice || 
+                   deliveryAreas || hasSocialData || hasGeneralProducts || 
+                   hasDetailedProducts;
         }
 
         // دوال السوشيال ميديا
@@ -1226,7 +948,7 @@
             document.getElementById('socialContainer').appendChild(select);
         }
 
-        function addSocialMedia(typeId, savedValue = '') {
+        function addSocialMedia(typeId) {
             const type = socialMediaTypes.find(t => t.id === typeId);
             if (!type) return;
             
@@ -1239,7 +961,7 @@
                         <i class="${type.icon}"></i>
                     </div>
                     <input type="text" class="social-input" id="social_${type.id}" 
-                           placeholder="${type.placeholder}" value="${savedValue}" oninput="autoSaveData()">
+                           placeholder="${type.placeholder}">
                     <button type="button" class="remove-social" onclick="removeSocialMedia('${type.id}')">
                         <i class="fas fa-times"></i>
                     </button>
@@ -1251,7 +973,7 @@
             if (select) select.remove();
             
             container.insertAdjacentHTML('beforeend', socialHTML);
-            autoSaveData();
+            updateStorageState();
         }
 
         function removeSocialMedia(typeId) {
@@ -1262,7 +984,7 @@
             selectedSocialTypes = selectedSocialTypes.filter(t => t.id !== typeId);
             
             document.querySelector(`.social-item[data-type="${typeId}"]`).remove();
-            autoSaveData();
+            updateStorageState();
         }
 
         // دوال المنتجات العامة
@@ -1271,13 +993,13 @@
             const newProduct = document.createElement('div');
             newProduct.className = 'general-product-item';
             newProduct.innerHTML = `
-                <input type="url" class="general-product-url" placeholder="https://example.com/product.jpg" oninput="autoSaveData()">
+                <input type="url" class="general-product-url" placeholder="https://example.com/product.jpg">
                 <button type="button" class="btn-remove-general" onclick="removeGeneralProduct(this)">
                     <i class="fas fa-times"></i> مسح
                 </button>
             `;
             container.appendChild(newProduct);
-            autoSaveData();
+            updateStorageState();
         }
 
         function removeGeneralProduct(button) {
@@ -1286,7 +1008,7 @@
             } else {
                 showPopup('error', 'خطأ', 'لازم يبقى عندك صورة واحدة على الأقل');
             }
-            autoSaveData();
+            updateStorageState();
         }
 
         // دوال المنتجات التفصيلية
@@ -1296,15 +1018,15 @@
             newProduct.className = 'product-item';
             newProduct.innerHTML = `
                 <div class="product-row">
-                    <input type="text" class="product-name" placeholder="اسم المنتج" oninput="autoSaveData()">
-                    <input type="url" class="product-image" placeholder="رابط الصورة" oninput="autoSaveData()">
-                    <input type="number" class="product-price" placeholder="السعر" oninput="autoSaveData()">
+                    <input type="text" class="product-name" placeholder="اسم المنتج">
+                    <input type="url" class="product-image" placeholder="رابط الصورة">
+                    <input type="number" class="product-price" placeholder="السعر">
                     <div class="product-options">
                         <label class="product-checkbox">
-                            <input type="checkbox" class="product-new" onchange="autoSaveData()"> جديد
+                            <input type="checkbox" class="product-new"> جديد
                         </label>
                         <label class="product-checkbox">
-                            <input type="checkbox" class="product-out" onchange="autoSaveData()"> نفذت
+                            <input type="checkbox" class="product-out"> نفذت
                         </label>
                     </div>
                     <button type="button" class="btn-remove-product" onclick="removeProduct(this)">
@@ -1313,7 +1035,7 @@
                 </div>
             `;
             container.appendChild(newProduct);
-            autoSaveData();
+            updateStorageState();
         }
 
         function removeProduct(button) {
@@ -1322,7 +1044,7 @@
             } else {
                 showPopup('error', 'خطأ', 'لازم يبقى عندك منتج واحد على الأقل');
             }
-            autoSaveData();
+            updateStorageState();
         }
 
         // دوال التحقق والإرسال
@@ -1332,6 +1054,7 @@
             const imageUrl = document.getElementById('imageUrl').value.trim();
             const description = document.getElementById('description').value.trim();
             
+            // لو كل الحقول فاضية
             if (!brandName && !orderUrl && !imageUrl && !description) {
                 showPopup('error', 'أنت مش كاتب أي بيانات!', 'هتبعت إيه؟ 😅');
                 return false;
@@ -1361,10 +1084,10 @@
                 imageUrl: document.getElementById('imageUrl').value.trim(),
                 description: document.getElementById('description').value.trim(),
                 deliveryTime: document.getElementById('deliveryTime').value.trim(),
-                deliveryAreas: document.getElementById('deliveryAreas').value.trim(),
                 deliveryFee: document.getElementById('deliveryFee').value.trim(),
                 minPrice: parseInt(document.getElementById('minPrice').value) || 0,
                 maxPrice: parseInt(document.getElementById('maxPrice').value) || 0,
+                deliveryAreas: document.getElementById('deliveryAreas').value.trim(),
                 paymentMethods: Array.from(document.querySelectorAll('.payment-option input:checked')).map(cb => cb.value),
                 socialMedia: {},
                 products: [],
@@ -1412,10 +1135,12 @@
                 }
             });
 
+            // مفتاح البراند (نفس النظام)
             const brandKey = brandName.toLowerCase()
                 .replace(/\s+/g, '_')
                 .replace(/[^a-z0-9_]/g, '') || 'brand';
 
+            // JSON بالتنسيق المطلوب بالضبط
             return JSON.stringify({ [brandKey]: brandData }, null, 2);
         }
 
@@ -1434,9 +1159,9 @@
             }
             
             titleEl.textContent = title;
-            titleEl.className = '';
             msgEl.textContent = message;
             
+            // زر إغلاق فقط
             buttonsDiv.innerHTML = `
                 <button class="popup-close" onclick="closePopup()">
                     <i class="fas fa-times"></i> إغلاق
@@ -1455,7 +1180,6 @@
             
             icon.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#e31b23;"></i>';
             titleEl.textContent = title;
-            titleEl.className = 'warning';
             msgEl.textContent = message;
             
             buttonsDiv.innerHTML = `
@@ -1467,6 +1191,7 @@
                 </button>
             `;
             
+            // حفظ الدوال في متغيرات عامة للاستخدام
             window.confirmAction = onConfirm;
             window.cancelAction = onCancel || function() { closePopup(); };
             
@@ -1493,16 +1218,18 @@
 
         // دالة إعادة تعيين كل البيانات
         function resetAllData() {
+            // تفريغ الحقول الأساسية
             document.getElementById('brandName').value = '';
             document.getElementById('orderUrl').value = '';
             document.getElementById('imageUrl').value = '';
             document.getElementById('description').value = '';
             document.getElementById('deliveryTime').value = '';
-            document.getElementById('deliveryAreas').value = '';
             document.getElementById('deliveryFee').value = '';
             document.getElementById('minPrice').value = '';
             document.getElementById('maxPrice').value = '';
+            document.getElementById('deliveryAreas').value = '';
             
+            // إعادة تعيين وسائل الدفع
             document.querySelectorAll('.payment-option input').forEach(cb => {
                 if (cb.id === 'cash' || cb.id === 'card') {
                     cb.checked = true;
@@ -1511,6 +1238,7 @@
                 }
             });
             
+            // إعادة تعيين السوشيال ميديا
             const socialContainer = document.getElementById('socialContainer');
             socialContainer.innerHTML = '';
             availableSocialTypes = [...socialMediaTypes];
@@ -1519,18 +1247,42 @@
             addSocialMedia('facebook');
             addSocialMedia('tiktok');
             
+            // إعادة تعيين المنتجات العامة
             const generalContainer = document.getElementById('generalProductsContainer');
-            generalContainer.innerHTML = '';
-            addGeneralProduct();
+            generalContainer.innerHTML = `
+                <div class="general-product-item">
+                    <input type="url" class="general-product-url" placeholder="https://example.com/product1.jpg">
+                    <button type="button" class="btn-remove-general" onclick="removeGeneralProduct(this)">
+                        <i class="fas fa-times"></i> مسح
+                    </button>
+                </div>
+            `;
             
+            // إعادة تعيين المنتجات التفصيلية
             const productsContainer = document.getElementById('productsContainer');
-            productsContainer.innerHTML = '';
-            addProduct();
+            productsContainer.innerHTML = `
+                <div class="product-item">
+                    <div class="product-row">
+                        <input type="text" class="product-name" placeholder="اسم المنتج">
+                        <input type="url" class="product-image" placeholder="رابط الصورة">
+                        <input type="number" class="product-price" placeholder="السعر">
+                        <div class="product-options">
+                            <label class="product-checkbox">
+                                <input type="checkbox" class="product-new"> جديد
+                            </label>
+                            <label class="product-checkbox">
+                                <input type="checkbox" class="product-out"> نفذ
+                            </label>
+                        </div>
+                        <button type="button" class="btn-remove-product" onclick="removeProduct(this)">
+                            <i class="fas fa-trash"></i> مسح
+                        </button>
+                    </div>
+                </div>
+            `;
             
+            // تحديث حالة التخزين
             sessionStorage.removeItem('hasFormData');
-            localStorage.removeItem(STORAGE_KEY);
-            
-            showAutoSaveIndicator('تم مسح البيانات');
         }
 
         // دالة عرض تأكيد إعادة التعيين
@@ -1544,16 +1296,19 @@
                     }
                 );
             } else {
+                // لو مفيش بيانات أصلاً
                 showPopup('info', 'مفيش بيانات', 'الصفحة فاضية أصلاً 😊');
             }
         }
 
         // الإرسال إلى Web3Forms
         async function submitToEmail() {
+            // أولاً: التحقق من وجود أي بيانات
             if (!checkIfAnyData()) {
                 return;
             }
             
+            // ثانياً: التحقق من الحقول الأساسية
             if (!validateBasicFields()) {
                 showPopup('error', 'بيانات ناقصة', 'لازم تكتب الحقول الأساسية الأربعة الأول');
                 return;
@@ -1561,6 +1316,7 @@
 
             const jsonData = generateJSON();
             
+            // تجهيز بيانات الإرسال
             const formData = new FormData();
             formData.append('access_key', ACCESS_KEY);
             formData.append('subject', 'براند جديد وصل!');
@@ -1568,6 +1324,7 @@
             formData.append('json_data', jsonData);
             formData.append('reply_to', 'easyget.app1@gmail.com');
             
+            // إضافة تنسيق للبريد
             formData.append('message', `
                 <h2>براند جديد وصل!</h2>
                 <pre style="background:#f4f4f4; padding:15px; border-radius:8px; direction:ltr; text-align:left;">${jsonData}</pre>
